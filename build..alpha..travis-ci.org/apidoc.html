@@ -1,0 +1,414 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/flitbit/diff#readme"
+
+    >deep-diff (v0.3.4)</a>
+</h1>
+<h4>Javascript utility for calculating deep difference, capturing changes, and applying changes across objects; for nodejs and the browser.</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.deep-diff">module deep-diff</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.deep-diff.applyChange">
+            function <span class="apidocSignatureSpan">deep-diff.</span>applyChange
+            <span class="apidocSignatureSpan">(target, source, change)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.deep-diff.applyDiff">
+            function <span class="apidocSignatureSpan">deep-diff.</span>applyDiff
+            <span class="apidocSignatureSpan">(target, source, filter)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.deep-diff.diff">
+            function <span class="apidocSignatureSpan">deep-diff.</span>diff
+            <span class="apidocSignatureSpan">(lhs, rhs, prefilter, accum)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.deep-diff.isConflict">
+            function <span class="apidocSignatureSpan">deep-diff.</span>isConflict
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.deep-diff.noConflict">
+            function <span class="apidocSignatureSpan">deep-diff.</span>noConflict
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.deep-diff.observableDiff">
+            function <span class="apidocSignatureSpan">deep-diff.</span>observableDiff
+            <span class="apidocSignatureSpan">(lhs, rhs, changes, prefilter, path, key, stack)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.deep-diff.revertChange">
+            function <span class="apidocSignatureSpan">deep-diff.</span>revertChange
+            <span class="apidocSignatureSpan">(target, source, change)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.deep-diff" id="apidoc.module.deep-diff">module deep-diff</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.deep-diff.applyChange" id="apidoc.element.deep-diff.applyChange">
+        function <span class="apidocSignatureSpan">deep-diff.</span>applyChange
+        <span class="apidocSignatureSpan">(target, source, change)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function applyChange(target, source, change) {
+  if (target &#x26;&#x26; source &#x26;&#x26; change &#x26;&#x26; change.kind) {
+    var it = target,
+        i = -1,
+        last = change.path ? change.path.length - 1 : 0;
+    while (++i &#x3c; last) {
+      if (typeof it[change.path[i]] === &#x27;undefined&#x27;) {
+        it[change.path[i]] = (typeof change.path[i] === &#x27;number&#x27;) ? [] : {};
+      }
+      it = it[change.path[i]];
+    }
+    switch (change.kind) {
+      case &#x27;A&#x27;:
+        applyArrayChange(change.path ? it[change.path[i]] : it, change.index, change.item);
+        break;
+      case &#x27;D&#x27;:
+        delete it[change.path[i]];
+        break;
+      case &#x27;E&#x27;:
+      case &#x27;N&#x27;:
+        it[change.path[i]] = change.rhs;
+        break;
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.deep-diff.applyDiff" id="apidoc.element.deep-diff.applyDiff">
+        function <span class="apidocSignatureSpan">deep-diff.</span>applyDiff
+        <span class="apidocSignatureSpan">(target, source, filter)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function applyDiff(target, source, filter) {
+  if (target &#x26;&#x26; source) {
+    var onChange = function(change) {
+      if (!filter || filter(target, source, change)) {
+        applyChange(target, source, change);
+      }
+    };
+    deepDiff(target, source, onChange);
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.deep-diff.diff" id="apidoc.element.deep-diff.diff">
+        function <span class="apidocSignatureSpan">deep-diff.</span>diff
+        <span class="apidocSignatureSpan">(lhs, rhs, prefilter, accum)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function accumulateDiff(lhs, rhs, prefilter, accum) {
+  accum = accum || [];
+  deepDiff(lhs, rhs,
+    function(diff) {
+      if (diff) {
+        accum.push(diff);
+      }
+    },
+    prefilter);
+  return (accum.length) ? accum : undefined;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.deep-diff.isConflict" id="apidoc.element.deep-diff.isConflict">
+        function <span class="apidocSignatureSpan">deep-diff.</span>isConflict
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">isConflict = function () {
+  return &#x27;undefined&#x27; !== typeof conflict;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.deep-diff.noConflict" id="apidoc.element.deep-diff.noConflict">
+        function <span class="apidocSignatureSpan">deep-diff.</span>noConflict
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">noConflict = function () {
+  if (conflictResolution) {
+    conflictResolution.forEach(function(it) {
+      it();
+    });
+    conflictResolution = null;
+  }
+  return accumulateDiff;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+```
+
+**browser**
+```html
+&#x3c;script src=&#x22;deep-diff-0.3.1.min.js&#x22;&#x3e;&#x3c;/script&#x3e;
+```
+&#x3e; Minified, browser release of the current version of the module is under the `releases` folder.
+&#x3e; In a browser, `deep-diff` defines a global variable `DeepDiff`. If there is a conflict in the global namesapce you can restore
+ the conflicting definition and assign `deep-diff` to another variable like this: `var deep = DeepDiff.<span class="apidocCodeKeywordSpan
+">noConflict</span>();`.
+
+## Simple Examples
+
+In order to describe differences, change revolves around an `origin` object. For consistency, the `origin` object is always the
+operand on the `left-hand-side` of operations. The `comparand`, which may contain changes, is always on the `right-hand-side` of
+ operations.
+
+``` javascript
+var diff = require(&#x27;deep-diff&#x27;).diff;
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.deep-diff.observableDiff" id="apidoc.element.deep-diff.observableDiff">
+        function <span class="apidocSignatureSpan">deep-diff.</span>observableDiff
+        <span class="apidocSignatureSpan">(lhs, rhs, changes, prefilter, path, key, stack)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
+  path = path || [];
+  var currentPath = path.slice(0);
+  if (typeof key !== &#x27;undefined&#x27;) {
+    if (prefilter) {
+      if (typeof(prefilter) === &#x27;function&#x27; &#x26;&#x26; prefilter(currentPath, key)) { return; }
+      else if (typeof(prefilter) === &#x27;object&#x27;) {
+        if (prefilter.prefilter &#x26;&#x26; prefilter.prefilter(currentPath, key)) { return; }
+        if (prefilter.normalize) {
+          var alt = prefilter.normalize(currentPath, key, lhs, rhs);
+          if (alt) {
+            lhs = alt[0];
+            rhs = alt[1];
+          }
+        }
+      }
+    }
+    currentPath.push(key);
+  }
+
+  // Use string comparison for regexes
+  if (realTypeOf(lhs) === &#x27;regexp&#x27; &#x26;&#x26; realTypeOf(rhs) === &#x27;regexp&#x27;) {
+    lhs = lhs.toString();
+    rhs = rhs.toString();
+  }
+
+  var ltype = typeof lhs;
+  var rtype = typeof rhs;
+  if (ltype === &#x27;undefined&#x27;) {
+    if (rtype !== &#x27;undefined&#x27;) {
+      changes(new DiffNew(currentPath, rhs));
+    }
+  } else if (rtype === &#x27;undefined&#x27;) {
+    changes(new DiffDeleted(currentPath, lhs));
+  } else if (realTypeOf(lhs) !== realTypeOf(rhs)) {
+    changes(new DiffEdit(currentPath, lhs, rhs));
+  } else if (Object.prototype.toString.call(lhs) === &#x27;[object Date]&#x27; &#x26;&#x26; Object.prototype.toString.call(rhs) === &#x27;[object Date]&#x27; &#x26;&#x26; ((
+lhs - rhs) !== 0)) {
+    changes(new DiffEdit(currentPath, lhs, rhs));
+  } else if (ltype === &#x27;object&#x27; &#x26;&#x26; lhs !== null &#x26;&#x26; rhs !== null) {
+    stack = stack || [];
+    if (stack.indexOf(lhs) &#x3c; 0) {
+      stack.push(lhs);
+      if (Array.isArray(lhs)) {
+        var i, len = lhs.length;
+        for (i = 0; i &#x3c; lhs.length; i++) {
+          if (i &#x3e;= rhs.length) {
+            changes(new DiffArray(currentPath, i, new DiffDeleted(undefined, lhs[i])));
+          } else {
+            deepDiff(lhs[i], rhs[i], changes, prefilter, currentPath, i, stack);
+          }
+        }
+        while (i &#x3c; rhs.length) {
+          changes(new DiffArray(currentPath, i, new DiffNew(undefined, rhs[i++])));
+        }
+      } else {
+        var akeys = Object.keys(lhs);
+        var pkeys = Object.keys(rhs);
+        akeys.forEach(function(k, i) {
+          var other = pkeys.indexOf(k);
+          if (other &#x3e;= 0) {
+            deepDiff(lhs[k], rhs[k], changes, prefilter, currentPath, k, stack);
+            pkeys = arrayRemove(pkeys, other);
+          } else {
+            deepDiff(lhs[k], undefined, changes, prefilter, currentPath, k, stack);
+          }
+        });
+        pkeys.forEach(function(k) {
+          deepDiff(undefined, rhs[k], changes, prefilter, currentPath, k, stack);
+        });
+      }
+      stack.length = stack.length - 1;
+    }
+  } else if (lhs !== rhs) {
+    if (!(ltype === &#x27;number&#x27; &#x26;&#x26; isNaN(lhs) &#x26;&#x26; isNaN(rhs))) {
+      changes(new DiffEdit(currentPath, lhs, rhs));
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.deep-diff.revertChange" id="apidoc.element.deep-diff.revertChange">
+        function <span class="apidocSignatureSpan">deep-diff.</span>revertChange
+        <span class="apidocSignatureSpan">(target, source, change)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function revertChange(target, source, change) {
+  if (target &#x26;&#x26; source &#x26;&#x26; change &#x26;&#x26; change.kind) {
+    var it = target,
+        i, u;
+    u = change.path.length - 1;
+    for (i = 0; i &#x3c; u; i++) {
+      if (typeof it[change.path[i]] === &#x27;undefined&#x27;) {
+        it[change.path[i]] = {};
+      }
+      it = it[change.path[i]];
+    }
+    switch (change.kind) {
+      case &#x27;A&#x27;:
+        // Array was modified...
+        // it will be an array...
+        revertArrayChange(it[change.path[i]], change.index, change.item);
+        break;
+      case &#x27;D&#x27;:
+        // Item was deleted...
+        it[change.path[i]] = change.lhs;
+        break;
+      case &#x27;E&#x27;:
+        // Item was edited...
+        it[change.path[i]] = change.lhs;
+        break;
+      case &#x27;N&#x27;:
+        // Item is new...
+        delete it[change.path[i]];
+        break;
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
