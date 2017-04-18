@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/flitbit/diff#readme"
-
-    >deep-diff (v0.3.4)</a>
+    <a href="https://github.com/flitbit/diff#readme">deep-diff (v0.3.4)</a>
 </h1>
 <h4>Javascript utility for calculating deep difference, capturing changes, and applying changes across objects; for nodejs and the browser.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.deep-diff">module deep-diff</a><ol>
 
@@ -272,25 +265,25 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function applyChange(target, source, change) {
-  if (target &#x26;&#x26; source &#x26;&#x26; change &#x26;&#x26; change.kind) {
+  if (target &amp;&amp; source &amp;&amp; change &amp;&amp; change.kind) {
     var it = target,
         i = -1,
         last = change.path ? change.path.length - 1 : 0;
-    while (++i &#x3c; last) {
-      if (typeof it[change.path[i]] === &#x27;undefined&#x27;) {
-        it[change.path[i]] = (typeof change.path[i] === &#x27;number&#x27;) ? [] : {};
+    while (++i &lt; last) {
+      if (typeof it[change.path[i]] === 'undefined') {
+        it[change.path[i]] = (typeof change.path[i] === 'number') ? [] : {};
       }
       it = it[change.path[i]];
     }
     switch (change.kind) {
-      case &#x27;A&#x27;:
+      case 'A':
         applyArrayChange(change.path ? it[change.path[i]] : it, change.index, change.item);
         break;
-      case &#x27;D&#x27;:
+      case 'D':
         delete it[change.path[i]];
         break;
-      case &#x27;E&#x27;:
-      case &#x27;N&#x27;:
+      case 'E':
+      case 'N':
         it[change.path[i]] = change.rhs;
         break;
     }
@@ -309,7 +302,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function applyDiff(target, source, filter) {
-  if (target &#x26;&#x26; source) {
+  if (target &amp;&amp; source) {
     var onChange = function(change) {
       if (!filter || filter(target, source, change)) {
         applyChange(target, source, change);
@@ -354,7 +347,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">isConflict = function () {
-  return &#x27;undefined&#x27; !== typeof conflict;
+  return 'undefined' !== typeof conflict;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -382,10 +375,10 @@
 
 **browser**
 ```html
-&#x3c;script src=&#x22;deep-diff-0.3.1.min.js&#x22;&#x3e;&#x3c;/script&#x3e;
+&lt;script src="deep-diff-0.3.1.min.js"&gt;&lt;/script&gt;
 ```
-&#x3e; Minified, browser release of the current version of the module is under the `releases` folder.
-&#x3e; In a browser, `deep-diff` defines a global variable `DeepDiff`. If there is a conflict in the global namesapce you can restore
+&gt; Minified, browser release of the current version of the module is under the `releases` folder.
+&gt; In a browser, `deep-diff` defines a global variable `DeepDiff`. If there is a conflict in the global namesapce you can restore
  the conflicting definition and assign `deep-diff` to another variable like this: `var deep = DeepDiff.<span class="apidocCodeKeywordSpan
 ">noConflict</span>();`.
 
@@ -396,7 +389,7 @@ operand on the `left-hand-side` of operations. The `comparand`, which may contai
  operations.
 
 ``` javascript
-var diff = require(&#x27;deep-diff&#x27;).diff;
+var diff = require('deep-diff').diff;
 ...</pre></li>
     </ul>
 
@@ -412,11 +405,11 @@ var diff = require(&#x27;deep-diff&#x27;).diff;
     <li>description and source-code<pre class="apidocCodePre">function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
   path = path || [];
   var currentPath = path.slice(0);
-  if (typeof key !== &#x27;undefined&#x27;) {
+  if (typeof key !== 'undefined') {
     if (prefilter) {
-      if (typeof(prefilter) === &#x27;function&#x27; &#x26;&#x26; prefilter(currentPath, key)) { return; }
-      else if (typeof(prefilter) === &#x27;object&#x27;) {
-        if (prefilter.prefilter &#x26;&#x26; prefilter.prefilter(currentPath, key)) { return; }
+      if (typeof(prefilter) === 'function' &amp;&amp; prefilter(currentPath, key)) { return; }
+      else if (typeof(prefilter) === 'object') {
+        if (prefilter.prefilter &amp;&amp; prefilter.prefilter(currentPath, key)) { return; }
         if (prefilter.normalize) {
           var alt = prefilter.normalize(currentPath, key, lhs, rhs);
           if (alt) {
@@ -430,38 +423,38 @@ var diff = require(&#x27;deep-diff&#x27;).diff;
   }
 
   // Use string comparison for regexes
-  if (realTypeOf(lhs) === &#x27;regexp&#x27; &#x26;&#x26; realTypeOf(rhs) === &#x27;regexp&#x27;) {
+  if (realTypeOf(lhs) === 'regexp' &amp;&amp; realTypeOf(rhs) === 'regexp') {
     lhs = lhs.toString();
     rhs = rhs.toString();
   }
 
   var ltype = typeof lhs;
   var rtype = typeof rhs;
-  if (ltype === &#x27;undefined&#x27;) {
-    if (rtype !== &#x27;undefined&#x27;) {
+  if (ltype === 'undefined') {
+    if (rtype !== 'undefined') {
       changes(new DiffNew(currentPath, rhs));
     }
-  } else if (rtype === &#x27;undefined&#x27;) {
+  } else if (rtype === 'undefined') {
     changes(new DiffDeleted(currentPath, lhs));
   } else if (realTypeOf(lhs) !== realTypeOf(rhs)) {
     changes(new DiffEdit(currentPath, lhs, rhs));
-  } else if (Object.prototype.toString.call(lhs) === &#x27;[object Date]&#x27; &#x26;&#x26; Object.prototype.toString.call(rhs) === &#x27;[object Date]&#x27; &#x26;&#x26; ((
+  } else if (Object.prototype.toString.call(lhs) === '[object Date]' &amp;&amp; Object.prototype.toString.call(rhs) === '[object Date]' &amp;&amp; ((
 lhs - rhs) !== 0)) {
     changes(new DiffEdit(currentPath, lhs, rhs));
-  } else if (ltype === &#x27;object&#x27; &#x26;&#x26; lhs !== null &#x26;&#x26; rhs !== null) {
+  } else if (ltype === 'object' &amp;&amp; lhs !== null &amp;&amp; rhs !== null) {
     stack = stack || [];
-    if (stack.indexOf(lhs) &#x3c; 0) {
+    if (stack.indexOf(lhs) &lt; 0) {
       stack.push(lhs);
       if (Array.isArray(lhs)) {
         var i, len = lhs.length;
-        for (i = 0; i &#x3c; lhs.length; i++) {
-          if (i &#x3e;= rhs.length) {
+        for (i = 0; i &lt; lhs.length; i++) {
+          if (i &gt;= rhs.length) {
             changes(new DiffArray(currentPath, i, new DiffDeleted(undefined, lhs[i])));
           } else {
             deepDiff(lhs[i], rhs[i], changes, prefilter, currentPath, i, stack);
           }
         }
-        while (i &#x3c; rhs.length) {
+        while (i &lt; rhs.length) {
           changes(new DiffArray(currentPath, i, new DiffNew(undefined, rhs[i++])));
         }
       } else {
@@ -469,7 +462,7 @@ lhs - rhs) !== 0)) {
         var pkeys = Object.keys(rhs);
         akeys.forEach(function(k, i) {
           var other = pkeys.indexOf(k);
-          if (other &#x3e;= 0) {
+          if (other &gt;= 0) {
             deepDiff(lhs[k], rhs[k], changes, prefilter, currentPath, k, stack);
             pkeys = arrayRemove(pkeys, other);
           } else {
@@ -483,7 +476,7 @@ lhs - rhs) !== 0)) {
       stack.length = stack.length - 1;
     }
   } else if (lhs !== rhs) {
-    if (!(ltype === &#x27;number&#x27; &#x26;&#x26; isNaN(lhs) &#x26;&#x26; isNaN(rhs))) {
+    if (!(ltype === 'number' &amp;&amp; isNaN(lhs) &amp;&amp; isNaN(rhs))) {
       changes(new DiffEdit(currentPath, lhs, rhs));
     }
   }
@@ -501,31 +494,31 @@ lhs - rhs) !== 0)) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function revertChange(target, source, change) {
-  if (target &#x26;&#x26; source &#x26;&#x26; change &#x26;&#x26; change.kind) {
+  if (target &amp;&amp; source &amp;&amp; change &amp;&amp; change.kind) {
     var it = target,
         i, u;
     u = change.path.length - 1;
-    for (i = 0; i &#x3c; u; i++) {
-      if (typeof it[change.path[i]] === &#x27;undefined&#x27;) {
+    for (i = 0; i &lt; u; i++) {
+      if (typeof it[change.path[i]] === 'undefined') {
         it[change.path[i]] = {};
       }
       it = it[change.path[i]];
     }
     switch (change.kind) {
-      case &#x27;A&#x27;:
+      case 'A':
         // Array was modified...
         // it will be an array...
         revertArrayChange(it[change.path[i]], change.index, change.item);
         break;
-      case &#x27;D&#x27;:
+      case 'D':
         // Item was deleted...
         it[change.path[i]] = change.lhs;
         break;
-      case &#x27;E&#x27;:
+      case 'E':
         // Item was edited...
         it[change.path[i]] = change.lhs;
         break;
-      case &#x27;N&#x27;:
+      case 'N':
         // Item is new...
         delete it[change.path[i]];
         break;
@@ -548,18 +541,18 @@ lhs - rhs) !== 0)) {
     return text;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-    return &#x27;math&#x27;;
+    return 'math';
   } else if (subject === null) {
-    return &#x27;null&#x27;;
+    return 'null';
   } else if (Array.isArray(subject)) {
-    return &#x27;array&#x27;;
-  } else if (Object.prototype.toString.call(subject) === &#x27;[object Date]&#x27;) {
-    return &#x27;date&#x27;;
-  } else if (typeof subject.toString !== &#x27;undefined&#x27; &#x26;&#x26; /^\/.*\//.test(subject.<span class="apidocCodeKeywordSpan
+    return 'array';
+  } else if (Object.prototype.toString.call(subject) === '[object Date]') {
+    return 'date';
+  } else if (typeof subject.toString !== 'undefined' &amp;&amp; /^\/.*\//.test(subject.<span class="apidocCodeKeywordSpan
 ">toString</span>())) {
-    return &#x27;regexp&#x27;;
+    return 'regexp';
   }
-  return &#x27;object&#x27;;
+  return 'object';
 }
 
 function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
@@ -582,25 +575,25 @@ function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function applyChange(target, source, change) {
-  if (target &#x26;&#x26; source &#x26;&#x26; change &#x26;&#x26; change.kind) {
+  if (target &amp;&amp; source &amp;&amp; change &amp;&amp; change.kind) {
     var it = target,
         i = -1,
         last = change.path ? change.path.length - 1 : 0;
-    while (++i &#x3c; last) {
-      if (typeof it[change.path[i]] === &#x27;undefined&#x27;) {
-        it[change.path[i]] = (typeof change.path[i] === &#x27;number&#x27;) ? [] : {};
+    while (++i &lt; last) {
+      if (typeof it[change.path[i]] === 'undefined') {
+        it[change.path[i]] = (typeof change.path[i] === 'number') ? [] : {};
       }
       it = it[change.path[i]];
     }
     switch (change.kind) {
-      case &#x27;A&#x27;:
+      case 'A':
         applyArrayChange(change.path ? it[change.path[i]] : it, change.index, change.item);
         break;
-      case &#x27;D&#x27;:
+      case 'D':
         delete it[change.path[i]];
         break;
-      case &#x27;E&#x27;:
-      case &#x27;N&#x27;:
+      case 'E':
+      case 'N':
         it[change.path[i]] = change.rhs;
         break;
     }
@@ -624,7 +617,7 @@ function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function applyDiff(target, source, filter) {
-  if (target &#x26;&#x26; source) {
+  if (target &amp;&amp; source) {
     var onChange = function(change) {
       if (!filter || filter(target, source, change)) {
         applyChange(target, source, change);
@@ -651,7 +644,7 @@ function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">isConflict = function () {
-  return &#x27;undefined&#x27; !== typeof conflict;
+  return 'undefined' !== typeof conflict;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -684,10 +677,10 @@ function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
 
 **browser**
 ```html
-&#x3c;script src=&#x22;deep-diff-0.3.1.min.js&#x22;&#x3e;&#x3c;/script&#x3e;
+&lt;script src="deep-diff-0.3.1.min.js"&gt;&lt;/script&gt;
 ```
-&#x3e; Minified, browser release of the current version of the module is under the `releases` folder.
-&#x3e; In a browser, `deep-diff` defines a global variable `DeepDiff`. If there is a conflict in the global namesapce you can restore
+&gt; Minified, browser release of the current version of the module is under the `releases` folder.
+&gt; In a browser, `deep-diff` defines a global variable `DeepDiff`. If there is a conflict in the global namesapce you can restore
  the conflicting definition and assign `deep-diff` to another variable like this: `var deep = DeepDiff.<span class="apidocCodeKeywordSpan
 ">noConflict</span>();`.
 
@@ -698,7 +691,7 @@ operand on the `left-hand-side` of operations. The `comparand`, which may contai
  operations.
 
 ``` javascript
-var diff = require(&#x27;deep-diff&#x27;).diff;
+var diff = require('deep-diff').diff;
 ...</pre></li>
     </ul>
 
@@ -719,11 +712,11 @@ var diff = require(&#x27;deep-diff&#x27;).diff;
     <li>description and source-code<pre class="apidocCodePre">function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
   path = path || [];
   var currentPath = path.slice(0);
-  if (typeof key !== &#x27;undefined&#x27;) {
+  if (typeof key !== 'undefined') {
     if (prefilter) {
-      if (typeof(prefilter) === &#x27;function&#x27; &#x26;&#x26; prefilter(currentPath, key)) { return; }
-      else if (typeof(prefilter) === &#x27;object&#x27;) {
-        if (prefilter.prefilter &#x26;&#x26; prefilter.prefilter(currentPath, key)) { return; }
+      if (typeof(prefilter) === 'function' &amp;&amp; prefilter(currentPath, key)) { return; }
+      else if (typeof(prefilter) === 'object') {
+        if (prefilter.prefilter &amp;&amp; prefilter.prefilter(currentPath, key)) { return; }
         if (prefilter.normalize) {
           var alt = prefilter.normalize(currentPath, key, lhs, rhs);
           if (alt) {
@@ -737,38 +730,38 @@ var diff = require(&#x27;deep-diff&#x27;).diff;
   }
 
   // Use string comparison for regexes
-  if (realTypeOf(lhs) === &#x27;regexp&#x27; &#x26;&#x26; realTypeOf(rhs) === &#x27;regexp&#x27;) {
+  if (realTypeOf(lhs) === 'regexp' &amp;&amp; realTypeOf(rhs) === 'regexp') {
     lhs = lhs.toString();
     rhs = rhs.toString();
   }
 
   var ltype = typeof lhs;
   var rtype = typeof rhs;
-  if (ltype === &#x27;undefined&#x27;) {
-    if (rtype !== &#x27;undefined&#x27;) {
+  if (ltype === 'undefined') {
+    if (rtype !== 'undefined') {
       changes(new DiffNew(currentPath, rhs));
     }
-  } else if (rtype === &#x27;undefined&#x27;) {
+  } else if (rtype === 'undefined') {
     changes(new DiffDeleted(currentPath, lhs));
   } else if (realTypeOf(lhs) !== realTypeOf(rhs)) {
     changes(new DiffEdit(currentPath, lhs, rhs));
-  } else if (Object.prototype.toString.call(lhs) === &#x27;[object Date]&#x27; &#x26;&#x26; Object.prototype.toString.call(rhs) === &#x27;[object Date]&#x27; &#x26;&#x26; ((
+  } else if (Object.prototype.toString.call(lhs) === '[object Date]' &amp;&amp; Object.prototype.toString.call(rhs) === '[object Date]' &amp;&amp; ((
 lhs - rhs) !== 0)) {
     changes(new DiffEdit(currentPath, lhs, rhs));
-  } else if (ltype === &#x27;object&#x27; &#x26;&#x26; lhs !== null &#x26;&#x26; rhs !== null) {
+  } else if (ltype === 'object' &amp;&amp; lhs !== null &amp;&amp; rhs !== null) {
     stack = stack || [];
-    if (stack.indexOf(lhs) &#x3c; 0) {
+    if (stack.indexOf(lhs) &lt; 0) {
       stack.push(lhs);
       if (Array.isArray(lhs)) {
         var i, len = lhs.length;
-        for (i = 0; i &#x3c; lhs.length; i++) {
-          if (i &#x3e;= rhs.length) {
+        for (i = 0; i &lt; lhs.length; i++) {
+          if (i &gt;= rhs.length) {
             changes(new DiffArray(currentPath, i, new DiffDeleted(undefined, lhs[i])));
           } else {
             deepDiff(lhs[i], rhs[i], changes, prefilter, currentPath, i, stack);
           }
         }
-        while (i &#x3c; rhs.length) {
+        while (i &lt; rhs.length) {
           changes(new DiffArray(currentPath, i, new DiffNew(undefined, rhs[i++])));
         }
       } else {
@@ -776,7 +769,7 @@ lhs - rhs) !== 0)) {
         var pkeys = Object.keys(rhs);
         akeys.forEach(function(k, i) {
           var other = pkeys.indexOf(k);
-          if (other &#x3e;= 0) {
+          if (other &gt;= 0) {
             deepDiff(lhs[k], rhs[k], changes, prefilter, currentPath, k, stack);
             pkeys = arrayRemove(pkeys, other);
           } else {
@@ -790,7 +783,7 @@ lhs - rhs) !== 0)) {
       stack.length = stack.length - 1;
     }
   } else if (lhs !== rhs) {
-    if (!(ltype === &#x27;number&#x27; &#x26;&#x26; isNaN(lhs) &#x26;&#x26; isNaN(rhs))) {
+    if (!(ltype === 'number' &amp;&amp; isNaN(lhs) &amp;&amp; isNaN(rhs))) {
       changes(new DiffEdit(currentPath, lhs, rhs));
     }
   }
@@ -813,31 +806,31 @@ lhs - rhs) !== 0)) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function revertChange(target, source, change) {
-  if (target &#x26;&#x26; source &#x26;&#x26; change &#x26;&#x26; change.kind) {
+  if (target &amp;&amp; source &amp;&amp; change &amp;&amp; change.kind) {
     var it = target,
         i, u;
     u = change.path.length - 1;
-    for (i = 0; i &#x3c; u; i++) {
-      if (typeof it[change.path[i]] === &#x27;undefined&#x27;) {
+    for (i = 0; i &lt; u; i++) {
+      if (typeof it[change.path[i]] === 'undefined') {
         it[change.path[i]] = {};
       }
       it = it[change.path[i]];
     }
     switch (change.kind) {
-      case &#x27;A&#x27;:
+      case 'A':
         // Array was modified...
         // it will be an array...
         revertArrayChange(it[change.path[i]], change.index, change.item);
         break;
-      case &#x27;D&#x27;:
+      case 'D':
         // Item was deleted...
         it[change.path[i]] = change.lhs;
         break;
-      case &#x27;E&#x27;:
+      case 'E':
         // Item was edited...
         it[change.path[i]] = change.lhs;
         break;
-      case &#x27;N&#x27;:
+      case 'N':
         // Item is new...
         delete it[change.path[i]];
         break;
@@ -863,18 +856,18 @@ lhs - rhs) !== 0)) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-    return &#x27;math&#x27;;
+    return 'math';
   } else if (subject === null) {
-    return &#x27;null&#x27;;
+    return 'null';
   } else if (Array.isArray(subject)) {
-    return &#x27;array&#x27;;
-  } else if (Object.prototype.toString.call(subject) === &#x27;[object Date]&#x27;) {
-    return &#x27;date&#x27;;
-  } else if (typeof subject.toString !== &#x27;undefined&#x27; &#x26;&#x26; /^\/.*\//.test(subject.<span class="apidocCodeKeywordSpan
+    return 'array';
+  } else if (Object.prototype.toString.call(subject) === '[object Date]') {
+    return 'date';
+  } else if (typeof subject.toString !== 'undefined' &amp;&amp; /^\/.*\//.test(subject.<span class="apidocCodeKeywordSpan
 ">toString</span>())) {
-    return &#x27;regexp&#x27;;
+    return 'regexp';
   }
-  return &#x27;object&#x27;;
+  return 'object';
 }
 
 function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
@@ -891,3 +884,4 @@ function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
     ]
 </div>
 </div>
+</body></html>
