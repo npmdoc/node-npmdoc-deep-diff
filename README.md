@@ -1,6 +1,6 @@
 # npmdoc-deep-diff
 
-#### api documentation for  [deep-diff (v0.3.4)](https://github.com/flitbit/diff#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-deep-diff.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-deep-diff) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-deep-diff.svg)](https://travis-ci.org/npmdoc/node-npmdoc-deep-diff)
+#### basic api documentation for  [deep-diff (v0.3.6)](https://github.com/flitbit/diff#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-deep-diff.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-deep-diff) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-deep-diff.svg)](https://travis-ci.org/npmdoc/node-npmdoc-deep-diff)
 
 #### Javascript utility for calculating deep difference, capturing changes, and applying changes across objects; for nodejs and the browser.
 
@@ -29,58 +29,79 @@
     },
     "contributors": [
         {
-            "name": "Dan Drinkard"
-        },
-        {
-            "name": "Daniel Spangler"
-        },
-        {
-            "name": "Denning"
-        },
-        {
-            "name": "Elad Efrat"
-        },
-        {
-            "name": "Mats Bryntse"
-        },
-        {
-            "name": "Nicholas Calugar"
+            "name": "Simen Bekkhus"
         },
         {
             "name": "Paul Pflugradt"
         },
         {
-            "name": "Serkan Serttop"
+            "name": "wooorm"
         },
         {
-            "name": "Simen Bekkhus"
-        },
-        {
-            "name": "Tom Ashworth"
-        },
-        {
-            "name": "Tom MacWright"
+            "name": "Nicholas Calugar"
         },
         {
             "name": "Yandell"
         },
         {
+            "name": "Thiago Santos"
+        },
+        {
+            "name": "Steve Mao"
+        },
+        {
+            "name": "Mats Bryntse"
+        },
+        {
+            "name": "Phillip Clark"
+        },
+        {
             "name": "ZauberNerd"
-        },
-        {
-            "name": "caasi Huang"
-        },
-        {
-            "name": "icesoar"
-        },
-        {
-            "name": "orlando"
         },
         {
             "name": "ravishivt"
         },
         {
-            "name": "wooorm"
+            "name": "Daniel Spangler"
+        },
+        {
+            "name": "Thomas de Barochez"
+        },
+        {
+            "name": "Morton Fox"
+        },
+        {
+            "name": "Amila Welihinda"
+        },
+        {
+            "name": "Will Biddy"
+        },
+        {
+            "name": "icesoar"
+        },
+        {
+            "name": "Serkan Serttop"
+        },
+        {
+            "name": "orlando"
+        },
+        {
+            "name": "Tom MacWright"
+        },
+        {
+            "name": "Denning"
+        },
+        {
+            "name": "Dan Drinkard"
+        },
+        {
+            "name": "Elad Efrat"
+        },
+        {
+            "name": "caasi Huang"
+        },
+        {
+            "name": "Tom Ashworth"
         }
     ],
     "dependencies": {},
@@ -91,6 +112,7 @@
         "jscs": "^1.12.0",
         "jshint": "^2.6.3",
         "mocha": "^2.2.1",
+        "rollup": "^0.41.6",
         "uglifyjs": "^2.4.10"
     },
     "directories": {
@@ -99,15 +121,17 @@
         "test": "./test"
     },
     "dist": {
-        "shasum": "aac5c39952236abe5f037a2349060ba01b00ae48",
-        "tarball": "https://registry.npmjs.org/deep-diff/-/deep-diff-0.3.4.tgz"
+        "shasum": "9134a91ded42ea25b9ebe192c93ac6f4ec2e6c9a",
+        "tarball": "https://registry.npmjs.org/deep-diff/-/deep-diff-0.3.6.tgz"
     },
     "files": [
         "index.js",
+        "index.es.js",
         "releases/"
     ],
-    "gitHead": "e271e69f4c6dbccf657cf30355d307b46659de67",
+    "gitHead": "f7df1a4eba06c8ce492f9bd7e3aeba7e18b8db82",
     "homepage": "https://github.com/flitbit/diff#readme",
+    "jsnext:main": "/index.es.js",
     "keywords": [
         "diff",
         "difference",
@@ -121,6 +145,7 @@
             "name": "flitbit"
         }
     ],
+    "module": "./index.es.js",
     "name": "deep-diff",
     "optionalDependencies": {},
     "repository": {
@@ -128,11 +153,13 @@
         "url": "git://github.com/flitbit/diff.git"
     },
     "scripts": {
-        "pretest": "jscs index.js test/ && jshint index.js test/",
+        "build": "rollup index.es.js -f umd -o index.js -n DeepDiff",
+        "pretest": "jscs index.es.js test/ -e && jshint index.es.js test/",
         "release": "uglifyjs index.js -o releases/deep-diff-$npm_package_version.min.js  -r '$,require,exports,module,window,global' -m  --comments '/^!/'",
         "test": "mocha"
     },
-    "version": "0.3.4"
+    "version": "0.3.6",
+    "bin": {}
 }
 ```
 
